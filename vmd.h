@@ -14,11 +14,11 @@
 
 /// @brief Perform variational mode decomposition on the given signal.
 /// @example
-///	vmd result(signal, alpha, tau, K, DC, init, tol);
-///	Eigen::MatrixXf u = result.u;	//	the collection of decomposed modes
-///	Eigen::MatrixXf u_hat = result.u_hat;	//	spectra of the modes
-///	Eigen::VectorXcf omega = result.omega;	//	estimated mode center-frequencies
-class __declspec(dllexport) vmd
+///	vmd result(signal, IMFs);
+///	Eigen::MatrixXf &u = result.u;	//	the collection of decomposed modes
+///	Eigen::MatrixXf &u_hat = result.u_hat;	//	spectra of the modes
+///	Eigen::VectorXcf &omega = result.omega;	//	estimated mode center-frequencies
+class vmd
 {
 
 
