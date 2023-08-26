@@ -70,8 +70,6 @@ vmd::vmd(const Eigen::VectorXf& signal, int K, float tol, float alpha, float tau
 		E_signal(save_T) = signal(save_T - 1);
 	}
 
-
-
 	save_T = E_signal.size();
 
 	float fs = 1. / save_T;
@@ -121,7 +119,6 @@ vmd::vmd(const Eigen::VectorXf& signal, int K, float tol, float alpha, float tau
 		omega_plus(0, 0) = std::complex<float>(0., 0.);
 	}
 
-	// Eigen::MatrixXcf lambda_hat = Eigen::MatrixXcf::Zero(N, freqs.rows());
 	Eigen::VectorXcf lambda_hat = Eigen::VectorXcf::Zero(freqs.rows());
 
 	float eps = 1.1921e-07;
@@ -169,15 +166,6 @@ vmd::vmd(const Eigen::VectorXf& signal, int K, float tol, float alpha, float tau
 			Eigen::VectorXcf right = u_hat_plus[1].col(k)(Eigen::seq(T / 2, T - 1)).array().abs().square();
 			omega_plus(n + 1, k) = left.transpose() * right;
 			omega_plus(n + 1, k) /= u_hat_plus[1].col(k)(Eigen::seq(T / 2, T - 1)).array().abs().square().sum();
-
-			/*std::complex<float> Dividend{ 0,0 }, Divisor{ 0, 0 }, Addend{ 0, 0 };
-			for (int i = 0; i < T - T / 2; i++) {
-				Addend = abs(u_hat_plus[n](T / 2 + i, k)) * abs(u_hat_plus[n](T / 2 + i, k));
-				Divisor += Addend;
-				Dividend += freqs[T / 2 + i] * Addend;
-			}
-			omega_plus(n, k) = Dividend / Divisor;*/
-
 		}
 
 		// Dual ascent
@@ -198,10 +186,7 @@ vmd::vmd(const Eigen::VectorXf& signal, int K, float tol, float alpha, float tau
 		}
 
 		u_hat_plus[0] = u_hat_plus[1];
-
 		Udiff = abs(acc);
-
-		//std::cout << n << "  " << Udiff << std::endl;
 	}
 
 
@@ -209,10 +194,8 @@ vmd::vmd(const Eigen::VectorXf& signal, int K, float tol, float alpha, float tau
 	N = (N > n) ? n : N;
 	IterationNum = N;
 	omega = omega_plus.row(N).real();
-
 	u_hat = Eigen::MatrixXcf::Zero(T, K);
 
-	//u_hat.block(T / 2, 0, T / 2, K) = u_hat_plus[N].block(T / 2, 0, T / 2, K);
 
 	for (int i = 0; i < T / 2; i++)
 	{
