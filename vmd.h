@@ -42,16 +42,16 @@ public:
 
 	/// @brief Perform variational mode decomposition on a given signal.
 	/// @param signal : The time domain signal(1D) to be decomposed.
-	/// @param tol : tolerance of convergence criterion; (default as 1e-6)
+	/// @param tol : tolerance of convergence criterion; (default as 1e-7)
 	/// @param K : The number of modes to be recovered.
-	/// @param alpha : The balancing parameter of the data - fidelity constraint (default as 100).
+	/// @param alpha : The balancing parameter of the data - fidelity constraint (default as 1000).
 	/// @param tau : Time - step of the dual ascent(pick 0 for noise - slack) (default as 0).
 	/// @param DC : True if the first mode is put and kept at DC(0 - freq) (default as 0).
 	/// @param init :	0 as all mode center-frequencies will start at 0; 
 	///					1 as all mode center-frequencies start uniformly distributed; 
 	///					2 as all mode center-frequencies initialized randomly; (currently unsupported)
 	///					(default as 0)
-	vmd(const Eigen::VectorXf& signal, int K, float tol = 1e-6, float alpha = 100, float tau = 0, int DC = 0, int init = 0);
+	vmd(const Eigen::VectorXf& signal, int K, float tol = 1e-7, float alpha = 1000, float tau = 0, int DC = 0, int init = 0);
 
 	/// @brief return how many iterations has been done.
 	/// @return iteration number.

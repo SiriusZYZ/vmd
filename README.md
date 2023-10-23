@@ -8,12 +8,26 @@ Variational Mode Decomposition (VMD) in C++
 
 # Example
 ```cpp
-// full test will be updated later. you can try it yourself first
-int IMFs = 5;
-vmd result(signal, IMFs);
-Eigen::MatrixXf & u = result.u;				//	the collection of decomposed modes
-Eigen::MatrixXf & u_hat = result.u_hat;		//	spectra of the modes
-Eigen::VectorXcf & omega = result.omega;	//	estimated mode center-frequencies
+int T = 1000;
+float fs = 1. / T;
+Eigen::VectorXf t = Eigen::VectorXf::LinSpaced(T, 0, 1);
+Eigen::VectorXf input(T);
+
+float f1 = 2.0f, f2 = 24.0f, f3 = 288.0f;
+for (int i = 0; i < T; i++) {
+  input(i) = cos(2 * M_PI * f1 * t(i)) 
+       + cos(2 * M_PI * f2 * t(i)) 
+       + cos(2 * M_PI * f3 * t(i));
+}
+input += 0.1 * Eigen::VectorXf::Random(T);
+
+int IMFs = 3;                                   // number of modes                    
+vmd result(input, IMFs);          
+
+cout << result.omega;
+Eigen::MatrixXf & u = result.u;	                // the collection of decomposed modes
+Eigen::MatrixXf & u_hat = result.u_hat;	        // spectra of the modes
+Eigen::VectorXcf & omega = result.omega;        // estimated mode center-frequencies
 ```
 - see `vmd.h` for more info.
 

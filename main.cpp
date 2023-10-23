@@ -20,7 +20,8 @@ int main() {
 	}
 	input += 0.1 * Eigen::VectorXf::Random(T);
 
-	vmd result(input, 3, 1e-7, 2000);
+	int IMFs = 3;
+	vmd result(input, IMFs);
 
 	cout << result.omega;
 	//cout << result.u;
